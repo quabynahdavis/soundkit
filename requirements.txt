@@ -1,1 +1,1 @@
-# No external dependencies for core functionality
+# No external dependencies required for SoundKit

@@ -1,3 +1,6 @@
 *.toml
 .venv/
 setup.py
+dist/
+.pypirc
+src/soundkit.egg.info/
