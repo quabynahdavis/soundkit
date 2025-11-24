@@ -21,7 +21,7 @@ class MusicTheoryAnalyzer:
             # Get chord information
             chord_notes = sk.chords.get_chord_notes(root, quality, octave)
             chord_freq = sk.chords.get_chord_frequencies(
-                root, quality, octave, concert_pitch=self.concert_pitch
+                root, quality, octave, #concert_pitch=self.concert_pitch
             )
             note_names = [sk.notes.midiToNoteName(n) for n in chord_notes]
 
