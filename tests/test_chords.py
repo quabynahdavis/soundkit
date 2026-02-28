@@ -1,10 +1,10 @@
 import unittest
-from src.soundkit.core.chords import (
+from soundkit.core.chords import (
     get_chord_notes,
     get_chord_frequencies,
     get_chord_names,
 )
-from src.soundkit.exceptions import InvalidChordError, InvalidNoteError
+from soundkit.exceptions import InvalidChordError, InvalidNoteError
 
 
 class TestChords(unittest.TestCase):

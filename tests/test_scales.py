@@ -1,10 +1,10 @@
 import unittest
-from src.soundkit.core.scales import (
+from soundkit.core.scales import (
     get_scale_notes,
     get_scale_frequencies,
     get_scale_names,
 )
-from src.soundkit.exceptions import InvalidScaleError, InvalidNoteError
+from soundkit.exceptions import InvalidScaleError, InvalidNoteError
 
 
 class TestScales(unittest.TestCase):
