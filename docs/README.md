@@ -18,18 +18,6 @@ SoundKit is a powerful Python framework designed for musicians, developers, and 
 ```bash
 pip install soundkit
 ```
-## Quick News!
-Soundkit functions can now be used without specifying their parent modules first. Nonetheless, they can still be used with their parent modules to prevent older codebases from breaking.
-
-```python
-import soundkit as sk
-
-print(sk.midiFreq("C4")) # 60 (without the core.notes or notes moudule)
-print(sk.notes.midiFreq("C4")) # 60 (with the notes module)
-
-# It's still the same thing
-
-```
 
 ## Quick Start
 
@@ -37,15 +25,15 @@ print(sk.notes.midiFreq("C4")) # 60 (with the notes module)
 import soundkit as sk
 
 # Basic note conversion
-print(sk.midiKey("C4"))      # 60
-print(sk.midiFreq("A4"))     # 440.0
+print(sk.notes.midiKey("C4"))      # 60
+print(sk.notes.midiFreq("A4"))     # 440.0
 
 # Create chords
-c_major = sk.get_chord_notes("C", "maj", 4)
+c_major = sk.chords.get_chord_notes("C", "maj", 4)
 print(c_major)  # [60, 64, 67]
 
 # Generate scales
-c_major_scale = sk.get_scale_notes("C", "major", 4, 2)
+c_major_scale = sk.scales.get_scale_notes("C", "major", 4, 2)
 print(c_major_scale)  # [60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81, 83]
 ```
 
@@ -61,23 +49,23 @@ The `notes` module handles all note-related conversions and operations.
 import soundkit as sk
 
 # Convert note name to MIDI number
-midi_number = sk.midiKey("C4")        # 60
-midi_number = sk.midiKey("A4")        # 69
-midi_number = sk.midiKey("Gb3")       # 54
+midi_number = sk.notes.midiKey("C4")        # 60
+midi_number = sk.notes.midiKey("A4")        # 69
+midi_number = sk.notes.midiKey("Gb3")       # 54
 
 # Convert note name to frequency
-frequency = sk.midiFreq("A4")         # 440.0
-frequency = sk.midiFreq("C4")         # 261.63
-frequency = sk.midiFreq("C4", round_digits=4)  # 261.6256
+frequency = sk.notes.midiFreq("A4")         # 440.0
+frequency = sk.notes.midiFreq("C4")         # 261.63
+frequency = sk.notes.midiFreq("C4", round_digits=4)  # 261.6256
 
 # Convert frequency to MIDI number
-midi_number = sk.freqToMidi(440.0)    # 69
-midi_number = sk.freqToMidi(261.63)   # 60
+midi_number = sk.notes.freqToMidi(440.0)    # 69
+midi_number = sk.notes.freqToMidi(261.63)   # 60
 
 # Convert MIDI number to note name
-note_name = sk.midiToNoteName(60)     # "C4"
-note_name = sk.midiToNoteName(69)     # "A4"
-note_name = sk.midiToNoteName(60, use_sharps=False)  # "C4" (no effect for C)
+note_name = sk.notes.midiToNoteName(60)     # "C4"
+note_name = sk.notes.midiToNoteName(69)     # "A4"
+note_name = sk.notes.midiToNoteName(60, use_sharps=False)  # "C4" (no effect for C)
 ```
 
 #### Supported Note Formats
@@ -86,19 +74,19 @@ SoundKit supports various note naming conventions:
 
 ```python
 # Sharp notes
-sk.midiKey("C#4")    # 61
-sk.midiKey("D#4")    # 63
-sk.midiKey("F#4")    # 66
+sk.notes.midiKey("C#4")    # 61
+sk.notes.midiKey("D#4")    # 63
+sk.notes.midiKey("F#4")    # 66
 
 # Flat notes
-sk.midiKey("Db4")    # 61
-sk.midiKey("Eb4")    # 63
-sk.midiKey("Gb4")    # 66
+sk.notes.midiKey("Db4")    # 61
+sk.notes.midiKey("Eb4")    # 63
+sk.notes.midiKey("Gb4")    # 66
 
 # Mixed notation
-sk.midiKey("C4")     # 60
-sk.midiKey("C#4")    # 61
-sk.midiKey("Db4")    # 61 (same as C#4)
+sk.notes.midiKey("C4")     # 60
+sk.notes.midiKey("C#4")    # 61
+sk.notes.midiKey("Db4")    # 61 (same as C#4)
 ```
 
 #### Batch Processing
@@ -110,15 +98,15 @@ import soundkit as sk
 notes = ["C4", "E4", "G4", "A4", "B4"]
 
 # Convert to MIDI numbers
-midi_numbers = sk.notes_to_midi(notes)
+midi_numbers = sk.notes.notes_to_midi(notes)
 print(midi_numbers)  # [60, 64, 67, 69, 71]
 
 # Convert to frequencies
-frequencies = sk.notes_to_frequencies(notes)
+frequencies = sk.notes.notes_to_frequencies(notes)
 print(frequencies)  # [261.63, 329.63, 392.0, 440.0, 493.88]
 
 # With custom concert pitch
-frequencies = sk.notes_to_frequencies(notes, concert_pitch=442.0)
+frequencies = sk.notes.notes_to_frequencies(notes, concert_pitch=442.0)
 ```
 
 #### Validation
@@ -127,8 +115,8 @@ frequencies = sk.notes_to_frequencies(notes, concert_pitch=442.0)
 import soundkit as sk
 
 # Check if note is valid
-is_valid = sk.is_valid_midi_range("C4")  # True
-is_valid = sk.is_valid_midi_range("C11") # False
+is_valid = sk.notes.is_valid_midi_range("C4")  # True
+is_valid = sk.notes.is_valid_midi_range("C11") # False
 
 # Handle invalid notes gracefully
 try:
@@ -152,13 +140,13 @@ The `chords` module provides chord generation and manipulation.
 import soundkit as sk
 
 # Generate chord notes
-c_major = sk.get_chord_notes("C", "maj", 4)
+c_major = sk.chords.get_chord_notes("C", "maj", 4)
 print(c_major)  # [60, 64, 67]
 
-d_minor = sk.get_chord_notes("D", "min", 4)
+d_minor = sk.chords.get_chord_notes("D", "min", 4)
 print(d_minor)  # [62, 65, 69]
 
-g_seventh = sk.get_chord_notes("G", "7", 4)
+g_seventh = sk.chords.get_chord_notes("G", "7", 4)
 print(g_seventh)  # [67, 71, 74, 77]
 ```
 
@@ -168,7 +156,7 @@ print(g_seventh)  # [67, 71, 74, 77]
 import soundkit as sk
 
 # Get all available chord types
-chord_types = sk.get_chord_names()
+chord_types = sk.chords.get_chord_names()
 print(chord_types)
 # ['maj', 'major', 'min', 'minor', 'dim', 'diminished', 'aug', 'augmented', 
 #  '7', 'dominant7', 'maj7', 'major7', 'min7', 'minor7', 'dim7', 'diminished7', 
@@ -181,15 +169,15 @@ print(chord_types)
 import soundkit as sk
 
 # Root position
-c_major_root = sk.get_chord_notes("C", "maj", 4, inversion=0)
+c_major_root = sk.chords.get_chord_notes("C", "maj", 4, inversion=0)
 print(c_major_root)  # [60, 64, 67]
 
 # First inversion
-c_major_first = sk.get_chord_notes("C", "maj", 4, inversion=1)
+c_major_first = sk.chords.get_chord_notes("C", "maj", 4, inversion=1)
 print(c_major_first)  # [64, 67, 72]
 
 # Second inversion
-c_major_second = sk.get_chord_notes("C", "maj", 4, inversion=2)
+c_major_second = sk.chords.get_chord_notes("C", "maj", 4, inversion=2)
 print(c_major_second)  # [67, 72, 76]
 ```
 
@@ -199,15 +187,15 @@ print(c_major_second)  # [67, 72, 76]
 import soundkit as sk
 
 # Get chord frequencies
-c_major_freq = sk.get_chord_frequencies("C", "maj", 4)
+c_major_freq = sk.chords.get_chord_frequencies("C", "maj", 4)
 print(c_major_freq)  # [261.63, 329.63, 392.0]
 
 # With custom rounding
-c_major_freq = sk.get_chord_frequencies("C", "maj", 4, round_digits=4)
+c_major_freq = sk.chords.get_chord_frequencies("C", "maj", 4, round_digits=4)
 print(c_major_freq)  # [261.6256, 329.6276, 392.0]
 
 # With inversion
-c_major_first_freq = sk.get_chord_frequencies("C", "maj", 4, inversion=1)
+c_major_first_freq = sk.chords.get_chord_frequencies("C", "maj", 4, inversion=1)
 ```
 
 ### Scales Module
@@ -220,14 +208,14 @@ The `scales` module provides scale generation and music theory operations.
 import soundkit as sk
 
 # Generate scale notes
-c_major = sk.get_scale_notes("C", "major", 4)
+c_major = sk.scales.get_scale_notes("C", "major", 4)
 print(c_major)  # [60, 62, 64, 65, 67, 69, 71]
 
-a_minor = sk.get_scale_notes("A", "minor", 4)
+a_minor = sk.scales.get_scale_notes("A", "minor", 4)
 print(a_minor)  # [69, 71, 72, 74, 76, 77, 79]
 
 # Multiple octaves
-c_major_2octaves = sk.get_scale_notes("C", "major", 4, 2)
+c_major_2octaves = sk.scales.get_scale_notes("C", "major", 4, 2)
 print(c_major_2octaves)  # [60, 62, 64, 65, 67, 69, 71, 72, 74, 76, 77, 79, 81, 83]
 ```
 
@@ -250,7 +238,7 @@ print(scale_types)
 import soundkit as sk
 
 # Get scale frequencies
-c_major_freq = sk.get_scale_frequencies("C", "major", 4)
+c_major_freq = sk.scales.get_scale_frequencies("C", "major", 4)
 print(c_major_freq)  # [261.63, 293.66, 329.63, 349.23, 392.0, 440.0, 493.88]
 
 # Multiple octaves with custom rounding
@@ -508,7 +496,7 @@ SoundKit is released under the MIT License. See [LICENSE](LICENSE) for details.
 
 For bug reports, feature requests, or questions:
 
-- Create an issue on [GitHub](https://github.com/quabynahdavis/soundkit/issues)
+- Create an issue on [GitHub](https://github.com/yourusername/soundkit/issues)
 
 - Email: <exceldavisville@gmail.com>
 

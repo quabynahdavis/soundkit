@@ -4,6 +4,7 @@ pyproject.toml
 src/soundkit/__init__.py
 src/soundkit/constants.py
 src/soundkit/exceptions.py
+src/soundkit.egg-info/.gitignore
 src/soundkit.egg-info/PKG-INFO
 src/soundkit.egg-info/SOURCES.txt
 src/soundkit.egg-info/dependency_links.txt
