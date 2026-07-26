@@ -4,3 +4,5 @@ setup.py
 dist/
 .pypirc
 src/soundkit.egg-info/
+/src/soundkit/__pycache__
+*.pyc
